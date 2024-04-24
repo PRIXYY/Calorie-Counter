@@ -1,18 +1,22 @@
-from django.shortcuts import render,get_object_or_404
-from .models import Food,Consume
-# Create your views here.
+from django.shortcuts import render, get_object_or_404
+from .models import Food, Consume
+from django.utils.datastructures import MultiValueDictKeyError
 def index(request):
-    
     if request.method == "POST":
-        food_consumed = request.POST.get('food_consumed', None)
-        consume = get_object_or_404(Food, name=food_consumed)
-        user = request.user
-        consume = Consume(user=user,food_consumed=consume)
+        try:
+            food_consumed = request.POST['food_consumed']
+        except MultiValueDictKeyError:
+            food_consumed = False
+        try:
+            food = Food.objects.get(name=food_consumed)
+        except Food.DoesNotExist:
+            # Handle the case where the Food object does not exist
+            return render(request, 'myapp/error.html', {'message': 'The food consumed does not exist.'})
+        consume = Consume(user=request.user, food_consumed=food)
         consume.save()
         foods = Food.objects.all()
 
     else:
         foods = Food.objects.all()
 
-
-    return render(request,'myapp/index.html',{'foods':foods})
+    return render(request, 'myapp/index.html', {'foods': foods})
