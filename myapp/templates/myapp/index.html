@@ -8,6 +8,24 @@
 </head>
 <body>
     <div class="container">
+        <br><br><br>
+        <h4>Calorie Goal</h4>
+        <br>
+        <div class="row">
+            <div class="col-md-9 offset-1">
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+
+
+
+
+
+
+
         <div class="row">
             <div class="col-md-12">
                 <form method="POST" >
@@ -84,13 +102,14 @@
     }
     console.log(fats);
 
-    document.getElementById("TotalCarbs").innerHTML = carbs;
-    document.getElementById("TotalProtien").innerHTML = protien;
-    document.getElementById("TotalFats").innerHTML = fats;
-    document.getElementById("TotalCalories").innerHTML = calories;
+    document.getElementById("TotalCarbs").innerHTML = '<b>' + carbs+'(gm)</b>';
+    document.getElementById("TotalProtien").innerHTML = '<b>' + protien+'(gm)</b>';
+    document.getElementById("TotalFats").innerHTML = '<b>' + fats +'(gm)</b>';
+    document.getElementById("TotalCalories").innerHTML = '<b>'+calories+'(Kcal)</b>' ;
 
 
-
+    var calPer = (calories/2000) *100;
+    document.getElementsByClassName("progress-bar")[0].setAttribute("style","width:"+calPer+"%");
 </script>
 
 
