@@ -11,8 +11,9 @@
         <div class="row">
             <div class="col-md-12">
                 <form method="POST" >
+                    {% csrf_token %} 
                     <div class="form-group row"
-                    {% csrf_token %}
+                    
                     <label class = "col-md-2"><b>Select food to add</b></label>
                     <select class="col-md-6 form-control" name="food_consumed" id="food_consumed">
                         {% for food in foods %}
@@ -36,7 +37,7 @@
                                 <th>Food Item</th>
                                 <th>Carbs</th>
                                 <th>Protien</th>
-                                <th>Fatd</th>
+                                <th>Fats</th>
                                 <th>Calorie</th>
                             </tr>
                             {% for c in consumed_food %}
@@ -48,7 +49,14 @@
                                 <td>{{c.food_consumed.calories}}</td>
                             </tr>
                             {% endfor %}
-                        </body>
+                            <tr>
+                                <td id="name" <b>Total</b> </td>
+                                <td id="TotalCarbs" <b></b> </td>
+                                <td id="TotalProtien" <b></b> </td>
+                                <td id="TotalFats" <b></b> </td>
+                                <td id="TotalCalories" <b></b> </td>
+                            </tr>
+                        
                     </table>
             </div>
 
@@ -58,5 +66,34 @@
         </div>
 
     </div>
-    
+</body>
+<script>
+    var table = document.getElementById("table");
+    var carbs=0,protien=0,fats=0,calories=0;
+
+    for(var i=1;i<table.rows.length-1;i++){
+        console.log(table.rows[i].cells[1].innerHTML);
+        carbs += parseFloat(table.rows[i].cells[1].innerHTML);
+        carbs = Math.round(carbs);
+        protien += parseFloat(table.rows[i].cells[2].innerHTML);
+        protien = Math.round(protien);
+        fats += parseFloat(table.rows[i].cells[3].innerHTML);
+        fats = Math.round(fats);
+        calories += parseFloat(table.rows[i].cells[4].innerHTML);
+        calories = Math.round(calories);
+    }
+    console.log(fats);
+
+    document.getElementById("TotalCarbs").innerHTML = carbs;
+    document.getElementById("TotalProtien").innerHTML = protien;
+    document.getElementById("TotalFats").innerHTML = fats;
+    document.getElementById("TotalCalories").innerHTML = calories;
+
+
+
+</script>
+
+
+
+
 </html>
